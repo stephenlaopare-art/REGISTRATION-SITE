@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Opare Mentorship Class — Flier</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Inter:wght@400;500;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0d0d1a;
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+  }
+
+  .flier {
+    width: 100%;
+    max-width: 680px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    background: #0d0d1a;
+    padding-bottom: 40px;
+  }
+
+  /* Decorative background */
+  .bg-texture {
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 40% at 50% 0%, rgba(184,134,11,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 90% 90%, rgba(44,44,84,0.6) 0%, transparent 60%),
+      linear-gradient(170deg, #0d0d1a 0%, #12122a 50%, #0d0d1a 100%);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .circle-tl {
+    position: absolute; top: -80px; left: -80px;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    border: 1px solid rgba(184,134,11,0.15);
+    z-index: 0;
+  }
+  .circle-br {
+    position: absolute; bottom: -80px; right: -80px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    border: 1px solid rgba(184,134,11,0.12);
+    z-index: 0;
+  }
+
+  .top-stripe {
+    position: relative; z-index: 1;
+    height: 5px;
+    background: linear-gradient(90deg, transparent, #B8860B, #D4AF37, #B8860B, transparent);
+    margin-bottom: 0;
+  }
+  .bottom-stripe {
+    height: 5px;
+    background: linear-gradient(90deg, transparent, #B8860B, #D4AF37, #B8860B, transparent);
+    margin-top: 32px;
+  }
+
+  /* Main content */
+  .content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 36px 24px 0;
+  }
+
+  .eyebrow {
+    font-size: clamp(10px, 2.5vw, 13px);
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    color: #D4AF37;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    opacity: 0.9;
+    text-align: center;
+  }
+
+  .ornament {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+  .ornament-line {
+    width: clamp(30px, 8vw, 60px); height: 1px;
+    background: linear-gradient(90deg, transparent, #B8860B);
+  }
+  .ornament-line.right { background: linear-gradient(90deg, #B8860B, transparent); }
+  .ornament-diamond {
+    width: 7px; height: 7px;
+    background: #D4AF37;
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  .program-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: clamp(36px, 10vw, 72px);
+    line-height: 1.05;
+    text-align: center;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+  }
+  .program-name span {
+    color: #D4AF37;
+    display: block;
+  }
+
+  .tagline {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(13px, 3.5vw, 20px);
+    color: rgba(255,255,255,0.65);
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 32px;
+    letter-spacing: 0.02em;
+    line-height: 1.5;
+  }
+
+  /* Pillars grid */
+  .pillars {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .pillar {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(184,134,11,0.25);
+    border-radius: 10px;
+    padding: 14px 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .pillar.full {
+    grid-column: 1 / -1;
+    background: rgba(184,134,11,0.07);
+    border-color: rgba(184,134,11,0.4);
+  }
+  .pillar-icon {
+    font-size: clamp(18px, 5vw, 24px);
+    flex-shrink: 0;
+    margin-top: 1px;
+    line-height: 1;
+  }
+  .pillar-title {
+    font-size: clamp(11px, 2.8vw, 13.5px);
+    font-weight: 600;
+    color: #D4AF37;
+    margin-bottom: 3px;
+    letter-spacing: 0.01em;
+    line-height: 1.3;
+  }
+  .pillar-desc {
+    font-size: clamp(10px, 2.4vw, 12px);
+    color: rgba(255,255,255,0.55);
+    line-height: 1.5;
+  }
+
+  /* Who is it for */
+  .audience-bar {
+    width: 100%;
+    background: rgba(184,134,11,0.1);
+    border: 1px solid rgba(184,134,11,0.3);
+    border-radius: 10px;
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  .audience-label {
+    font-size: clamp(10px, 2.5vw, 11px);
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    color: #D4AF37;
+    text-transform: uppercase;
+  }
+  .audience-text {
+    font-size: clamp(12px, 3vw, 13.5px);
+    color: rgba(255,255,255,0.75);
+    line-height: 1.6;
+  }
+
+  /* CTA */
+  .cta-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+  }
+  .cta-btn {
+    display: block;
+    background: linear-gradient(135deg, #B8860B, #D4AF37, #B8860B);
+    color: #0d0d1a;
+    font-size: clamp(13px, 3.5vw, 15px);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 16px 48px;
+    border-radius: 50px;
+    text-decoration: none;
+    text-align: center;
+    width: fit-content;
+  }
+  .cta-sub {
+    font-size: clamp(11px, 2.8vw, 13px);
+    color: rgba(255,255,255,0.45);
+    font-style: italic;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  /* Footer */
+  .footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 16px 24px 0;
+  }
+  .footer-text {
+    font-size: clamp(9px, 2.2vw, 11px);
+    color: rgba(184,134,11,0.5);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1.8;
+  }
+
+  /* Tablet / desktop: restore square-ish look */
+  @media (min-width: 600px) {
+    .audience-bar { flex-direction: row; align-items: center; gap: 16px; }
+    .audience-bar::before {
+      content: '';
+      display: block;
+      width: 1px; height: 30px;
+      background: rgba(184,134,11,0.3);
+      flex-shrink: 0;
+      order: 2;
+    }
+    .audience-label { order: 1; white-space: nowrap; }
+    .audience-text { order: 3; }
+    .cta-row { flex-direction: row; justify-content: center; gap: 28px; }
+    .cta-sub { text-align: left; }
+  }
+</style>
+</head>
+<body>
+<div class="bg-texture"></div>
+<div class="flier">
+  <div class="circle-tl"></div>
+  <div class="circle-br"></div>
+  <div class="top-stripe"></div>
+
+  <div class="content">
+    <p class="eyebrow">Now Open for Registration</p>
+
+    <div class="ornament">
+      <div class="ornament-line"></div>
+      <div class="ornament-diamond"></div>
+      <div class="ornament-line right"></div>
+    </div>
+
+    <h1 class="program-name">The Opare<span>Mentorship Class</span></h1>
+    <p class="tagline">Preparing young people for life — beyond the certificate</p>
+
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar-icon">🏅</div>
+        <div>
+          <div class="pillar-title">Becoming a Person of Value</div>
+          <div class="pillar-desc">Character, purpose & real-world impact</div>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">💰</div>
+        <div>
+          <div class="pillar-title">Financial Knowledge</div>
+          <div class="pillar-desc">Earn, manage, invest & build your future</div>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">🧠</div>
+        <div>
+          <div class="pillar-title">The Right Mindset</div>
+          <div class="pillar-desc">Resilience, discipline & emotional strength</div>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">💍</div>
+        <div>
+          <div class="pillar-title">Choosing a Life Partner</div>
+          <div class="pillar-desc">Wisdom, values & making the right choice</div>
+        </div>
+      </div>
+      <div class="pillar full">
+        <div class="pillar-icon">⚠️</div>
+        <div>
+          <div class="pillar-title">The Cost of Having No Mentor</div>
+          <div class="pillar-desc">How lack of guidance silently robs young people of their greatness — and how to break that cycle</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="audience-bar">
+      <div class="audience-label">Who is this for?</div>
+      <div class="audience-text">Young people who have completed Senior High School and are ready to grow beyond their certificate — into who they are truly meant to be.</div>
+    </div>
+
+    <div class="cta-row">
+      <a class="cta-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSdvjkzwjpOTGbodfxAKV8hDd9w66pe-9KAZugZnuRPFTTKVaA/viewform?usp=publish-editor">Register Now</a>
+      <div class="cta-sub">Spaces are limited.<br>Your future does not wait.</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-text">The Opare Mentorship Class &nbsp;·&nbsp; Building the Next Generation of Great Humans</div>
+  </div>
+  <div class="bottom-stripe"></div>
+</div>
+</body>
+</html>
